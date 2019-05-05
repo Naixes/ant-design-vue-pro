@@ -40,20 +40,20 @@ export default {
   data() {
     return {
       visible: false
-    }
+    };
   },
   methods: {
     onClose() {
-      this.visible = false
+      this.visible = false;
     },
     // 将配置信息同步到路由上
     handleSettingChange(type, value) {
       // 这里有问题
       this.$router.push({ query: { ...this.$route.query, [type]: value } });
-      console.log(this.$route.query)
+      console.log(this.$route.query);
     }
   }
-}
+};
 </script>
 <style scoped>
 .handle {
@@ -67,7 +67,6 @@ export default {
   line-height: 45px;
   text-align: center;
   color: #fff;
-  border-radius: 5px 0 0 5px;  
+  border-radius: 5px 0 0 5px;
 }
 </style>
-

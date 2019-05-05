@@ -1,22 +1,29 @@
 <template>
   <div :class="[`nav-theme-${navTheme}, nav-layout-${navLayout}`]">
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
+      <!-- theme：主题 -->
       <a-layout-sider
-        v-if="navLayout==='left'"
-        :theme="navTheme" 
+        v-if="navLayout === 'left'"
+        :theme="navTheme"
         :trigger="null"
         collapsible
         v-model="collapsed"
+        :width="256"
       >
         <div class="logo">Ant Design Pro</div>
         <!-- 菜单 -->
-        <SiderMenu />
+        <!-- 传递主题 -->
+        <SiderMenu :theme="navTheme" />
       </a-layout-sider>
       <a-layout>
         <!-- 头部 -->
         <a-layout-header style="background: #fff; padding: 0">
           <!-- 注意冒号 -->
-          <a-icon class="menu" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="collapsed = !collapsed"></a-icon>
+          <a-icon
+            class="menu"
+            :type="collapsed ? 'menu-fold' : 'menu-unfold'"
+            @click="collapsed = !collapsed"
+          ></a-icon>
           <Header />
         </a-layout-header>
         <!-- 内容 -->
@@ -34,10 +41,10 @@
 </template>
 
 <script>
-import Header from "./Header"
-import SiderMenu from "./SiderMenu"
-import Footer from "./Footer"
-import Drawer from "../components/SettingDrawer"
+import Header from "./Header";
+import SiderMenu from "./SiderMenu";
+import Footer from "./Footer";
+import Drawer from "../components/SettingDrawer";
 export default {
   components: {
     Header,
@@ -47,8 +54,8 @@ export default {
   },
   data() {
     return {
-      collapsed: false,
-    }
+      collapsed: false
+    };
   },
   computed: {
     navTheme() {
@@ -58,13 +65,16 @@ export default {
       return this.$route.navLayout || "left";
     }
   },
-  methods: {
-    
-  }
+  methods: {}
 };
 </script>
 
 <style scoped>
+.logo {
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+}
 .menu {
   padding: 0 20px;
   font-size: 20px;
@@ -73,12 +83,9 @@ export default {
 .menu:hover {
   background-color: #eee;
 }
-.logo {
-  height: 64px;
-  line-height: 64px;
-  text-align: center;
-}
-/* >>> 深度选择器：可影响子组件 */
+/* 不能写成.nav-theme-dark .logo：第三方组件会对最外层div添加自定义属性，scoped中的css编译出来选择器都会加上自定义属性 */
+/* >>> 深度选择器：可影响子组件，sass/less的话可能无法识别，这时候需要使用 /deep/ 选择器 */
+/* .nav-theme-dark >>> .logo { */
 .nav-theme-dark >>> .logo {
   color: #fff;
 }
