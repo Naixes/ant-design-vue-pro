@@ -4,7 +4,7 @@
       :defaultSelectedKeys="['1']"
       :defaultOpenKeys="['2']"
       mode="inline"
-      :theme="them"
+      :theme="theme"
       :inlineCollapsed="collapsed"
     >
       <template v-for="item in list">
