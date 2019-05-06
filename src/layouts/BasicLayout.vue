@@ -1,6 +1,6 @@
 <template>
-  <!-- class之间为空格！！ -->
-  <div :class="[`nav-theme-${navTheme} nav-layout-${navLayout}`]">
+  <!-- 注意中间的逗号 -->
+  <div :class="[`nav-theme-${navTheme}`, `nav-layout-${navLayout}`]">
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
       <!-- theme：主题 -->
       <a-layout-sider
@@ -19,7 +19,7 @@
       <a-layout>
         <!-- 头部 -->
         <a-layout-header style="background: #fff; padding: 0">
-          <!-- 注意冒号 -->
+          <!-- 注意引号 -->
           <a-icon
             class="menu"
             :type="collapsed ? 'menu-fold' : 'menu-unfold'"
@@ -46,6 +46,7 @@ import Header from "./Header";
 import SiderMenu from "./SiderMenu";
 import Footer from "./Footer";
 import Drawer from "../components/SettingDrawer";
+
 export default {
   components: {
     Header,
@@ -59,11 +60,12 @@ export default {
     };
   },
   computed: {
+    // 主题定制
     navTheme() {
-      return this.$route.navTheme || "dark";
+      return this.$route.query.navTheme || "dark";
     },
     navLayout() {
-      return this.$route.navLayout || "left";
+      return this.$route.query.navLayout || "left";
     }
   },
   methods: {}

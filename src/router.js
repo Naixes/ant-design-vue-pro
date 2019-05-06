@@ -16,6 +16,8 @@ const router = new Router({
     // 用户登录和注册
     {
       path: "/user",
+      // 不在菜单中显示
+      hideInMenu: true,
       // 直接使用render函数渲染路由渲染页面，要比直接编写一个路由渲染页面要方便
       // component: { render: h => h("router-view") },
       component: () =>
@@ -52,11 +54,17 @@ const router = new Router({
         {
           path: "/dashboard",
           name: "dashboard",
+          meta: {
+            title: "仪表盘"
+          },
           component: { render: h => h("router-view") },
           children: [
             {
               path: "/dashboard/analysis",
               name: "analysis",
+              meta: {
+                title: "分析页"
+              },
               component: () =>
                 import(/* webpackChunkName: "dashboard" */ "./views/Dashboard/Analysis")
             }
@@ -65,17 +73,27 @@ const router = new Router({
         {
           path: "/form",
           name: "form",
+          meta: {
+            title: "表单"
+          },
           component: { render: h => h("router-view") },
           children: [
             {
               path: "/form/basic-form",
               name: "basicform",
+              meta: {
+                title: "基础表单"
+              },
               component: () =>
                 import(/* webpackChunkName: "form" */ "./views/Forms/BasicForm")
             },
             {
               path: "/form/step-form",
+              hideChildrenInMenu: true,
               name: "stepform",
+              meta: {
+                title: "分步表单"
+              },
               component: () =>
                 import(/* webpackChunkName: "form" */ "./views/Forms/StepForm"),
               children: [
@@ -106,6 +124,7 @@ const router = new Router({
     // 配置404页面
     {
       path: "*",
+      hideInMenu: true,
       name: "404",
       component: NotFound
     }

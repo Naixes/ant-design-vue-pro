@@ -7,12 +7,14 @@
       :theme="theme"
       :inlineCollapsed="collapsed"
     >
-      <template v-for="item in list">
-        <a-menu-item v-if="!item.children" :key="item.key">
+      <template v-for="item in menuData">
+        <!-- 不包含子菜单的菜单部分 -->
+        <a-menu-item v-if="!item.children" :key="item.path">
           <a-icon type="pie-chart" />
-          <span>{{ item.title }}</span>
+          <span>{{ item.meta.title }}</span>
         </a-menu-item>
-        <sub-menu v-else :menu-info="item" :key="item.key" />
+        <!-- 包含子菜单的菜单部分 -->
+        <sub-menu v-else :menu-info="item" :key="item.path" />
       </template>
     </a-menu>
   </div>
@@ -35,30 +37,42 @@ export default {
     }
   },
   data() {
+    // 菜单数据
+    // console.log(this.$router.options.routes);
+    const menuData = this.getMenuData(this.$router.options.routes);
+    // console.log(menuData);
     return {
       collapsed: false,
-      list: [
-        {
-          key: "1",
-          title: "Option 1"
-        },
-        {
-          key: "2",
-          title: "Navigation 2",
-          children: [
-            {
-              key: "2.1",
-              title: "Navigation 3",
-              children: [{ key: "2.1.1", title: "Option 2.1.1" }]
-            }
-          ]
-        }
-      ]
+      menuData
     };
   },
   methods: {
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
+    },
+    // 从路由中获取菜单信息
+    getMenuData(routes) {
+      const menuData = [];
+      // for-in：循环对象；for-of：循环数组
+      for (let i of routes) {
+        // 过滤有名字并且要展示的路由信息
+        if (i.name && !i.hideInMenu) {
+          // 拷贝当前路由信息进行编辑
+          const item = { ...i };
+          delete item.children;
+          // 过滤有子元素并且不隐藏的路由信息
+          if (i.children && !i.hideChildrenInMenu) {
+            item.children = this.getMenuData(i.children);
+          }
+          // console.log(item);
+          menuData.push(item);
+          // 过滤没有名字并且要展示，有子元素并且不隐藏的路由信息
+        } else if (i.children && !i.hideChildrenInMenu && !i.hideInMenu) {
+          // 将返回的数组展开
+          menuData.push(...this.getMenuData(i.children));
+        }
+      }
+      return menuData;
     }
   }
 };
