@@ -9,6 +9,9 @@ import "nprogress/nprogress.css";
 
 Vue.use(Router);
 
+// const pip = (chunkName, path, page) => () =>
+//   import(`/* webpackChunkName: "${chunkName}" */ "./${path}/${page}"`);
+
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -22,6 +25,7 @@ const router = new Router({
       // component: { render: h => h("router-view") },
       component: () =>
         import(/* webpackChunkName: "layout" */ "./layouts/UserLayout"),
+      // component: pip("layout", "layouts", "UserLayout"),
       children: [
         {
           path: "/user",

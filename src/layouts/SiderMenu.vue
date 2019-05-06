@@ -68,7 +68,7 @@ export default {
           menuData.push(item);
           // 过滤没有名字并且要展示，有子元素并且不隐藏的路由信息
         } else if (i.children && !i.hideChildrenInMenu && !i.hideInMenu) {
-          // 将返回的数组展开
+          // 将返回的数组展开并添加到菜单数据中
           menuData.push(...this.getMenuData(i.children));
         }
       }
