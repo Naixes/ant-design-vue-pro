@@ -50,7 +50,9 @@ export default {
     handleSettingChange(type, value) {
       // 这里有问题
       this.$router.push({ query: { ...this.$route.query, [type]: value } });
-      console.log(this.$route.query);
+      console.log(type);
+      console.log(value);
+      console.log(this.$router);
     }
   }
 };

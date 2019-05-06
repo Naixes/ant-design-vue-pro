@@ -13,11 +13,12 @@ const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    // 用户登录和注册
     {
       path: "/user",
       // 直接使用render函数渲染路由渲染页面，要比直接编写一个路由渲染页面要方便
       // component: { render: h => h("router-view") },
-      component: () => 
+      component: () =>
         import(/* webpackChunkName: "layout" */ "./layouts/UserLayout"),
       children: [
         {
@@ -29,13 +30,13 @@ const router = new Router({
           name: "login",
           // 异步加载组件提高效率(路由懒加载)
           component: () =>
-          import(/* webpackChunkName: "user" */ "./views/User/Login")
+            import(/* webpackChunkName: "user" */ "./views/User/Login")
         },
         {
           path: "/user/register",
           name: "register",
           component: () =>
-          import(/* webpackChunkName: "user" */ "./views/User/Register")
+            import(/* webpackChunkName: "user" */ "./views/User/Register")
         }
       ]
     },
@@ -46,7 +47,7 @@ const router = new Router({
       children: [
         {
           path: "/",
-          redirect: "/dashboard/analysis",
+          redirect: "/dashboard/analysis"
         },
         {
           path: "/dashboard",
@@ -56,7 +57,7 @@ const router = new Router({
             {
               path: "/dashboard/analysis",
               name: "analysis",
-              component: () => 
+              component: () =>
                 import(/* webpackChunkName: "dashboard" */ "./views/Dashboard/Analysis")
             }
           ]
@@ -64,7 +65,7 @@ const router = new Router({
         {
           path: "/form",
           name: "form",
-          component: { render: h=> h("router-view") },
+          component: { render: h => h("router-view") },
           children: [
             {
               path: "/form/basic-form",
@@ -97,9 +98,9 @@ const router = new Router({
                     import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step3")
                 }
               ]
-            },
+            }
           ]
-        },
+        }
       ]
     },
     // 配置404页面
@@ -107,16 +108,16 @@ const router = new Router({
       path: "*",
       name: "404",
       component: NotFound
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
     }
+    // {
+    //   path: "/about",
+    //   name: "about",
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () =>
+    //     import(/* webpackChunkName: "about" */ "./views/About.vue")
+    // }
   ]
 });
 

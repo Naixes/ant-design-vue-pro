@@ -1,5 +1,6 @@
 <template>
-  <div :class="[`nav-theme-${navTheme}, nav-layout-${navLayout}`]">
+  <!-- class之间为空格！！ -->
+  <div :class="[`nav-theme-${navTheme} nav-layout-${navLayout}`]">
     <a-layout id="components-layout-demo-side" style="min-height: 100vh">
       <!-- theme：主题 -->
       <a-layout-sider
@@ -70,6 +71,11 @@ export default {
 </script>
 
 <style scoped>
+/* 写成.nav-theme-dark .logo可能会有问题：第三方组件会对最外层div添加自定义属性，scoped中的css编译出来选择器都会加上自定义属性 */
+/* >>> 深度选择器：可影响子组件，sass/less的话可能无法识别，这时候需要使用 /deep/ 选择器 */
+.nav-theme-dark >>> .logo {
+  color: #fff;
+}
 .logo {
   height: 64px;
   line-height: 64px;
@@ -82,11 +88,5 @@ export default {
 }
 .menu:hover {
   background-color: #eee;
-}
-/* 不能写成.nav-theme-dark .logo：第三方组件会对最外层div添加自定义属性，scoped中的css编译出来选择器都会加上自定义属性 */
-/* >>> 深度选择器：可影响子组件，sass/less的话可能无法识别，这时候需要使用 /deep/ 选择器 */
-/* .nav-theme-dark >>> .logo { */
-.nav-theme-dark >>> .logo {
-  color: #fff;
 }
 </style>
