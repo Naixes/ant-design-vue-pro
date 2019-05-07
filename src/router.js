@@ -19,7 +19,7 @@ const router = new Router({
     // 用户登录和注册
     {
       path: "/user",
-      // 不在菜单中显示
+      // 不在菜单中显示，包括子元素
       hideInMenu: true,
       // 直接使用render函数渲染路由渲染页面，要比直接编写一个路由渲染页面要方便
       // component: { render: h => h("router-view") },
@@ -59,7 +59,8 @@ const router = new Router({
           path: "/dashboard",
           name: "dashboard",
           meta: {
-            title: "仪表盘"
+            title: "仪表盘",
+            icon: "dashboard"
           },
           component: { render: h => h("router-view") },
           children: [
@@ -78,7 +79,8 @@ const router = new Router({
           path: "/form",
           name: "form",
           meta: {
-            title: "表单"
+            title: "表单",
+            icon: "form"
           },
           component: { render: h => h("router-view") },
           children: [
