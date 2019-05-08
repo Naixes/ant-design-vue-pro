@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+// 引入权限组件
+import Authorized from "./components/Authorized";
 import auth from "./directives/auth";
 
 // 加载ant-design-vue
@@ -25,6 +27,7 @@ Vue.use(Drawer);
 Vue.use(Radio);
 Vue.use(Menu);
 
+Vue.component("Authorized", Authorized);
 Vue.use(auth);
 
 new Vue({

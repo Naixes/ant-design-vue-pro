@@ -177,7 +177,6 @@ router.beforeEach((to, from, next) => {
   // 有路由改变时才显示进度条
   if (to.path !== from.path) {
     NProgress.start();
-    next();
   }
 
   // 权限过滤
@@ -206,6 +205,9 @@ router.beforeEach((to, from, next) => {
       });
     }
   }
+
+  // 不要忘了next()
+  next();
 });
 
 router.afterEach(() => {

@@ -1,4 +1,4 @@
-const currentAuth = ["user"];
+const currentAuth = ["admin"];
 export { currentAuth };
 
 // 获取现在的权限

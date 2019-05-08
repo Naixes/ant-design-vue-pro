@@ -11,7 +11,9 @@
         v-model="collapsed"
         :width="256"
       >
-        <div class="logo">Ant Design Pro</div>
+        <div class="logo">
+          <h4 v-if="!collapsed" class="logo">Ant Design Pro</h4>
+        </div>
         <!-- 菜单 -->
         <!-- 传递主题 -->
         <SiderMenu :theme="navTheme" />
@@ -21,9 +23,9 @@
         <a-layout-header style="background: #fff; padding: 0">
           <!-- 注意引号 -->
           <a-icon
-            v-auth="['admin']"
+            v-auth="['admin', 'user']"
             class="menu"
-            :type="collapsed ? 'menu-fold' : 'menu-unfold'"
+            :type="collapsed ? 'menu-unfold' : 'menu-fold'"
             @click="collapsed = !collapsed"
           ></a-icon>
           <Header />
@@ -39,7 +41,7 @@
       </a-layout>
     </a-layout>
     <!-- 权限组件 -->
-    <Authorized :authority="['user']">
+    <Authorized :authority="['admin', 'user']">
       <!-- 主题定制：抽屉 -->
       <Drawer />
     </Authorized>
@@ -52,17 +54,7 @@ import SiderMenu from "./SiderMenu";
 import Footer from "./Footer";
 import Drawer from "../components/SettingDrawer";
 
-// 引入权限组件
-import Authorized from "../components/Authorized";
-
 export default {
-  components: {
-    Header,
-    SiderMenu,
-    Footer,
-    Drawer,
-    Authorized
-  },
   data() {
     return {
       collapsed: false
@@ -71,13 +63,19 @@ export default {
   computed: {
     // 主题定制
     navTheme() {
+      console.log("$route.query", this.$route.query);
       return this.$route.query.navTheme || "dark";
     },
     navLayout() {
       return this.$route.query.navLayout || "left";
     }
   },
-  methods: {}
+  components: {
+    Header,
+    SiderMenu,
+    Footer,
+    Drawer
+  }
 };
 </script>
 

@@ -13,7 +13,7 @@ export default {
   // 由于没有this，template传值不方便，使用render函数渲染页面
   render(h, context) {
     const { props, scopedSlots } = context;
-    console.log(scopedSlots);
+    // console.log(scopedSlots);
     // 通过权限校验时渲染作用域插槽
     // 注意：scopedSlots.default是一个方法
     return check(props.authority) ? scopedSlots.default() : null;

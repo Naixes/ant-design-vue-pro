@@ -7,7 +7,7 @@
       /><span>{{ props.menuInfo.meta.title }}</span>
     </span>
     <template v-for="item in props.menuInfo.children">
-      <!-- 注意子组件没有 $router 和 $route，需要使用 parent -->
+      <!-- 注意函数式组件没有this，需要使用 parent -->
       <a-menu-item
         v-if="!item.children"
         :key="item.path"
@@ -25,9 +25,6 @@
 </template>
 <script>
 export default {
-  props: ["menuInfo"],
-  created() {
-    console.log(this);
-  }
+  props: ["menuInfo"]
 };
 </script>
