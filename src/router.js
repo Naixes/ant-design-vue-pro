@@ -1,11 +1,20 @@
 import Vue from "vue";
 import Router from "vue-router";
 
+// 404，403页面
 import NotFound from "./views/404";
+import Forbidden from "./views/403";
 
 // 引入nprogress进度条
-import Nprogress from "nprogress";
+import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+
+import { notification } from "ant-design-vue";
+
+// 引入权限判断
+import { checkCurrentAuthority, isLogin } from "./utils/auth";
+// 引入lodash方法
+import findLast from "lodash/findLast";
 
 Vue.use(Router);
 
@@ -48,6 +57,9 @@ const router = new Router({
     },
     {
       path: "/",
+      meta: {
+        authority: ["admin", "user"]
+      },
       component: () =>
         import(/* webpackChunkName: "layout" */ "./layouts/BasicLayout"),
       children: [
@@ -80,7 +92,8 @@ const router = new Router({
           name: "form",
           meta: {
             title: "表单",
-            icon: "form"
+            icon: "form",
+            authority: ["admin"]
           },
           component: { render: h => h("router-view") },
           children: [
@@ -103,6 +116,10 @@ const router = new Router({
               component: () =>
                 import(/* webpackChunkName: "form" */ "./views/Forms/StepForm"),
               children: [
+                {
+                  path: "/form/step-form",
+                  redirect: "/form/step-form/info"
+                },
                 {
                   path: "/form/step-form/info",
                   name: "info",
@@ -133,6 +150,13 @@ const router = new Router({
       hideInMenu: true,
       name: "404",
       component: NotFound
+    },
+    // 配置403页面
+    {
+      path: "/403",
+      hideInMenu: true,
+      name: "403",
+      component: Forbidden
     }
     // {
     //   path: "/about",
@@ -146,17 +170,47 @@ const router = new Router({
   ]
 });
 
-// 结合路由守卫配置进度条动画
-router.beforeEach((from, to, next) => {
+// 结合路由守卫配置进度条动画，权限过滤
+// 注意参数：to, from, next
+router.beforeEach((to, from, next) => {
+  // console.log("beforeEach");
   // 有路由改变时才显示进度条
   if (to.path !== from.path) {
-    Nprogress.start();
+    NProgress.start();
     next();
+  }
+
+  // 权限过滤
+  // console.log(to);
+  // 获取需要权限的项目
+  // const authorityItem = to.matched.find(i => i.meta.authority);
+  // 要从后往前find否则一直都是第一个
+  const authorityItem = findLast(to.matched, i => i.meta.authority);
+  // 校验权限
+  // 没有通过校验的情况
+  // console.log(authorityItem);
+  if (authorityItem && !checkCurrentAuthority(authorityItem.meta.authority)) {
+    // 没有登陆的情况
+    if (!isLogin && to.path !== "/user/login") {
+      next({
+        path: "/user/login"
+      });
+      // 登录了的情况
+    } else if (to.path !== "/403") {
+      notification.error({
+        message: "403",
+        description: "您暂时还无权访问，请联系管理员"
+      });
+      next({
+        path: "/403"
+      });
+    }
   }
 });
 
 router.afterEach(() => {
-  Nprogress.done();
+  // console.log("afterEach");
+  NProgress.done();
 });
 
 export default router;

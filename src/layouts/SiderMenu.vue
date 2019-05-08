@@ -8,8 +8,16 @@
     >
       <template v-for="item in menuData">
         <!-- 不包含子菜单的菜单部分 -->
-        <a-menu-item v-if="!item.children" :key="item.path" @click="push">
-          <a-icon v-if="item.meta.icon" :type="item.meta.icon" />
+        <a-menu-item
+          @click="() => $router.push({ path: item.path, query: $route.query })"
+          v-if="!item.children"
+          :key="item.path"
+        >
+          <a-icon
+            @click="push()"
+            v-if="item.meta.icon"
+            :type="item.meta.icon"
+          />
           <span>{{ item.meta.title }}</span>
         </a-menu-item>
         <!-- 包含子菜单的菜单部分 -->
@@ -25,16 +33,23 @@
  * SubMenu1.vue https://github.com/vueComponent/ant-design-vue/blob/master/components/menu/demo/SubMenu1.vue
  * */
 import SubMenu from "./SubMenu";
+
+import { checkCurrentAuthority } from "../utils/auth";
+
 export default {
+  // 主题
   props: {
+    // 主题
     theme: {
       type: String,
       default: "dark"
     }
   },
+  // 子菜单
   components: {
     "sub-menu": SubMenu
   },
+  // 监视路由变化
   watch: {
     // 监视路由变化
     "$route.path": function(v) {
@@ -67,10 +82,6 @@ export default {
     };
   },
   methods: {
-    push() {
-      console.log("this.$router");
-      // this.$router.push({ path: item.path, query: this.$route.query });
-    },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
@@ -79,8 +90,18 @@ export default {
       const menuData = [];
       // for-in：循环对象；for-of：循环数组
       for (let i of routes) {
-        // 过滤：有名字并且不需要隐藏
+        // 根据权限显示菜单
+        if (
+          i.meta &&
+          i.meta.authority &&
+          !checkCurrentAuthority(i.meta.authority)
+        ) {
+          // 没有权限时进行下一次循环
+          continue;
+        }
+
         if (i.name && !i.hideInMenu) {
+          // 过滤：有名字并且不需要隐藏
           // 设置菜单映射
           this.openKeysMap[i.path] = parentKeys;
           this.selectedKeysMap[i.path] = [selectedKey || i.path];
@@ -113,6 +134,8 @@ export default {
           );
         }
       }
+      // console.log("openKeysMap", this.openKeysMap);
+      // console.log("selectedKeysMap", this.selectedKeysMap);
       return menuData;
     }
   }

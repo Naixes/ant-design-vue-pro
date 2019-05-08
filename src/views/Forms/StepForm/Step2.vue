@@ -1,13 +1,9 @@
 <template>
-  <div>Info</div>
+  <div>Step 2</div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

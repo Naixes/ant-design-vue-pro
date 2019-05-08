@@ -1,8 +1,5 @@
 <template>
-  <div>
-    StepForm
-    <router-view></router-view>
-  </div>
+  <div>403</div>
 </template>
 
 <script>
