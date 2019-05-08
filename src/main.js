@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import auth from "./directives/auth";
+
 // 加载ant-design-vue
 // 全局加载
 // import Antd from "ant-design-vue"
@@ -22,6 +24,8 @@ Vue.use(Icon);
 Vue.use(Drawer);
 Vue.use(Radio);
 Vue.use(Menu);
+
+Vue.use(auth);
 
 new Vue({
   router,

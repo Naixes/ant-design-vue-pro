@@ -12,7 +12,7 @@ import "nprogress/nprogress.css";
 import { notification } from "ant-design-vue";
 
 // 引入权限判断
-import { checkCurrentAuthority, isLogin } from "./utils/auth";
+import { check, isLogin } from "./utils/auth";
 // 引入lodash方法
 import findLast from "lodash/findLast";
 
@@ -189,7 +189,7 @@ router.beforeEach((to, from, next) => {
   // 校验权限
   // 没有通过校验的情况
   // console.log(authorityItem);
-  if (authorityItem && !checkCurrentAuthority(authorityItem.meta.authority)) {
+  if (authorityItem && !check(authorityItem.meta.authority)) {
     // 没有登陆的情况
     if (!isLogin && to.path !== "/user/login") {
       next({

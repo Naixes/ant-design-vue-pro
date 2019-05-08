@@ -21,6 +21,7 @@
         <a-layout-header style="background: #fff; padding: 0">
           <!-- 注意引号 -->
           <a-icon
+            v-auth="['admin']"
             class="menu"
             :type="collapsed ? 'menu-fold' : 'menu-unfold'"
             @click="collapsed = !collapsed"
@@ -37,7 +38,11 @@
         </a-layout-footer>
       </a-layout>
     </a-layout>
-    <Drawer />
+    <!-- 权限组件 -->
+    <Authorized :authority="['user']">
+      <!-- 主题定制：抽屉 -->
+      <Drawer />
+    </Authorized>
   </div>
 </template>
 
@@ -47,12 +52,16 @@ import SiderMenu from "./SiderMenu";
 import Footer from "./Footer";
 import Drawer from "../components/SettingDrawer";
 
+// 引入权限组件
+import Authorized from "../components/Authorized";
+
 export default {
   components: {
     Header,
     SiderMenu,
     Footer,
-    Drawer
+    Drawer,
+    Authorized
   },
   data() {
     return {

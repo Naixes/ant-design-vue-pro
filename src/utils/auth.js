@@ -7,7 +7,7 @@ export function getCurrentAuthority() {
 }
 
 // 校验权限
-export function checkCurrentAuthority(a) {
+export function check(a) {
   const current = getCurrentAuthority();
   return current.some(i => a.includes(i));
 }

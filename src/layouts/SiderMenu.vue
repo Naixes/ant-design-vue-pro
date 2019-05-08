@@ -34,7 +34,7 @@
  * */
 import SubMenu from "./SubMenu";
 
-import { checkCurrentAuthority } from "../utils/auth";
+import { check } from "../utils/auth";
 
 export default {
   // 主题
@@ -91,11 +91,7 @@ export default {
       // for-in：循环对象；for-of：循环数组
       for (let i of routes) {
         // 根据权限显示菜单
-        if (
-          i.meta &&
-          i.meta.authority &&
-          !checkCurrentAuthority(i.meta.authority)
-        ) {
+        if (i.meta && i.meta.authority && !check(i.meta.authority)) {
           // 没有权限时进行下一次循环
           continue;
         }
