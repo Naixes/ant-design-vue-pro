@@ -35,7 +35,7 @@ export default {
       // // console.log(chartOptions.series[0].data);
       // // 由于深度监视耗费性能，在这里手动修改chartOptions的值
       // this.chartOptions = { ...this.chartOptions };
-      // this.getChartData();
+      this.getChartData();
     }, 1000);
   },
   methods: {
