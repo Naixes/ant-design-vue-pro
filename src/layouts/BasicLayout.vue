@@ -63,7 +63,7 @@ export default {
   computed: {
     // 主题定制
     navTheme() {
-      console.log("$route.query", this.$route.query);
+      // console.log("$route.query", this.$route.query);
       return this.$route.query.navTheme || "dark";
     },
     navLayout() {
