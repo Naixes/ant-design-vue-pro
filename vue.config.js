@@ -19,6 +19,8 @@ module.exports = {
             console.log("Skipping proxy for browser request.");
             return "/index.html";
             // 判断是否使用mock数据
+            // "serve:no-mock": "cross-env MOCK=none vue-cli-service serve"
+            // serve:no-mock命令表示不使用mock数据，Windows需要依赖cross-env包
           } else if (process.env.MOCK !== "none") {
             // 从url获取文件名
             const name = req.path
