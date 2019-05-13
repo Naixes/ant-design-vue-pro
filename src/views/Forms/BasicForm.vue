@@ -21,6 +21,7 @@
           </a-radio-button>
         </a-radio-group>
       </a-form-item>
+      <!-- 校验有两种方式：自定义校验（利用双向数据绑定），动态校验（不使用双向绑定，将数据的校验交给form代理，校验完成后进行数据同步） -->
       <!-- 自定义校验：validate-status，hasFeedback，help，可以不需要使用 Form.create 和 getFieldDecorator，自己定义校验的时机和内容 -->
       <!-- <a-form-item
         label="Field A"
