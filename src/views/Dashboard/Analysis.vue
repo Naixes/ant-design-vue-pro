@@ -26,17 +26,17 @@ export default {
   },
   created() {
     this.getChartData();
-    this.interval = setInterval(() => {
-      // // 数据改变后图表没有同步改变，需要watch监听改变重新渲染数据
-      // // 注意map返回新数组需要接收
-      // this.chartOptions.series[0].data = this.chartOptions.series[0].data.map(
-      //   () => random(100)
-      // );
-      // // console.log(chartOptions.series[0].data);
-      // // 由于深度监视耗费性能，在这里手动修改chartOptions的值
-      // this.chartOptions = { ...this.chartOptions };
-      this.getChartData();
-    }, 1000);
+    // this.interval = setInterval(() => {
+    //   // // 数据改变后图表没有同步改变，需要watch监听改变重新渲染数据
+    //   // // 注意map返回新数组需要接收
+    //   // this.chartOptions.series[0].data = this.chartOptions.series[0].data.map(
+    //   //   () => random(100)
+    //   // );
+    //   // // console.log(chartOptions.series[0].data);
+    //   // // 由于深度监视耗费性能，在这里手动修改chartOptions的值
+    //   // this.chartOptions = { ...this.chartOptions };
+    //   this.getChartData();
+    // }, 1000);
   },
   methods: {
     getChartData() {
