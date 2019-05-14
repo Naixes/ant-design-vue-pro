@@ -3,7 +3,11 @@ import router from "../../router";
 
 const state = {
   info: {
-    payAccount: "123456"
+    payAccount: "123456",
+    receiverAccount: {
+      type: "alipay",
+      number: ""
+    }
   }
 };
 

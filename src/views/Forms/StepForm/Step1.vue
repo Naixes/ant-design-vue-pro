@@ -17,9 +17,31 @@
           placeholder="请输入付款账号"
         />
       </a-form-item>
+      <a-form-item
+        label="收款账户"
+        :label-col="formItemLayout.labelCol"
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
+        <!-- 自定义表单控件 -->
+        <ReceiverAccount
+          v-decorator="[
+            'receiverAccount',
+            {
+              initialValue: info.receiverAccount,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入收款账号',
+                  validator: checkNum
+                }
+              ]
+            }
+          ]"
+        />
+      </a-form-item>
       <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
         <a-button type="primary" @click="handleSubmit">
-          Submit
+          下一步
         </a-button>
       </a-form-item>
     </a-form>
@@ -27,7 +49,11 @@
 </template>
 
 <script>
+import ReceiverAccount from "@/components/ReceiverAccount";
 export default {
+  components: {
+    ReceiverAccount
+  },
   data() {
     this.form = this.$form.createForm(this);
     return {
@@ -47,6 +73,14 @@ export default {
     }
   },
   methods: {
+    // 收款账号校验
+    checkNum(rule, value, callback) {
+      if (value && value.number) {
+        callback();
+      } else {
+        callback(false);
+      }
+    },
     handleSubmit() {
       const { form, $store, $router } = this;
 
@@ -59,6 +93,7 @@ export default {
           });
           $router.push("/form/step-form/confirm");
         }
+        // console.log(err);
       });
     }
   }

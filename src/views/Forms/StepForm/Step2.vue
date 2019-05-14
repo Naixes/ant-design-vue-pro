@@ -8,6 +8,12 @@
         >{{ info.payAccount }}
       </a-form-item>
       <a-form-item
+        label="收款账户"
+        :label-col="formItemLayout.labelCol"
+        :wrapper-col="formItemLayout.wrapperCol"
+        >{{ info.receiverAccount.number }}
+      </a-form-item>
+      <a-form-item
         label="密码"
         :label-col="formItemLayout.labelCol"
         :wrapper-col="formItemLayout.wrapperCol"
@@ -26,7 +32,10 @@
       </a-form-item>
       <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
         <a-button type="primary" @click="handleSubmit">
-          Submit
+          提交
+        </a-button>
+        <a-button style="margin-left: 8px" @click="handlePre">
+          上一步
         </a-button>
       </a-form-item>
     </a-form>
@@ -44,17 +53,19 @@ export default {
       },
       buttonItemLayout: {
         wrapperCol: { span: 14, offset: 4 }
-      }
+      },
+      info: this.$store.state.form.info
     };
   },
-  computed: {
-    info() {
-      // console.log(this.$store.state.form.info);
-      return this.$store.state.form.info;
-    }
-  },
+  // computed: {
+  //   info() {
+  //     // console.log(this.$store.state.form.info);
+  //     return this.$store.state.form.info;
+  //   }
+  // },
   methods: {
     handleSubmit() {
+      console.log(this.info);
       const { form, $store, info } = this;
 
       form.validateFields((err, values) => {
@@ -66,6 +77,9 @@ export default {
           });
         }
       });
+    },
+    handlePre() {
+      this.$router.push("/form/step-form/info");
     }
   }
 };

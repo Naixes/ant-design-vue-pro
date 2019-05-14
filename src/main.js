@@ -23,7 +23,8 @@ import {
   Radio,
   Menu,
   Form,
-  Input
+  Input,
+  Select
 } from "ant-design-vue";
 
 Vue.config.productionTip = false;
@@ -37,6 +38,7 @@ Vue.use(Radio);
 Vue.use(Menu);
 Vue.use(Form);
 Vue.use(Input);
+Vue.use(Select);
 
 Vue.component("Authorized", Authorized);
 Vue.use(auth);
