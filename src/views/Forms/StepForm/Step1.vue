@@ -93,7 +93,6 @@ export default {
           });
           $router.push("/form/step-form/confirm");
         }
-        // console.log(err);
       });
     }
   }
