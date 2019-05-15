@@ -48,7 +48,6 @@ export default {
     },
     // 将配置信息同步到路由上
     handleSettingChange(type, value) {
-      // 这里有问题
       this.$router.push({ query: { ...this.$route.query, [type]: value } });
       console.log(this.$route);
     }
